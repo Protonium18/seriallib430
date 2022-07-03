@@ -1,2 +1,2 @@
 # seriallib430
-A C++ bitbanging library designed for the MSP430. 
+A C++ SPI bitbanging library designed for the MSP430.
