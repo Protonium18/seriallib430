@@ -70,6 +70,14 @@ uint8_t serialobj::byteOut(uint8_t data, uint8_t direction){
     return 0;
 }
 
+uint8_t serialobj::bytesOut(uint8_t* data_array, uint16_t len, uint8_t direction){
+    for(uint16_t i = 0; i < len; i++){
+        this->byteOut(data_array[i], direction);
+    }
+
+    return 0;
+}
+
 uint8_t serialobj::byteIn(uint8_t direction){
     uint8_t data = 0;
 
@@ -87,6 +95,13 @@ uint8_t serialobj::byteIn(uint8_t direction){
    return data;
 }
 
+uint8_t serialobj::bytesIn(uint8_t* data_array, uint16_t len, uint8_t direction){
+    for(uint16_t i = 0; i < len; i++){
+        data_array[i] = this->byteIn(direction);
+    }
+
+    return 0;
+}
 
 void serialobj::chipSelect(uint8_t out){
     if(out){
