@@ -44,13 +44,26 @@ serialobj::serialobj(uint8_t PORT, uint8_t SERIAL_OUT, uint8_t SERIAL_IN, uint8_
     }
 #endif
 
-    SDA_OUT = 0x01 << SERIAL_OUT;
-    SDA_IN = 0x01 << SERIAL_IN;
-    CLK = 0x01 << CLOCK;
-    SELECT = 0x01 << CHIP_SELECT;
+    if(SDA_OUT != NULL_PIN){
+        SDA_OUT = 0x01 << SERIAL_OUT;
+        *PORT_DIR |= SDA_OUT;
+    }
 
-    *PORT_DIR |= SDA_OUT | CLK | SELECT;
-    *PORT_DIR &= ~SDA_IN;
+    if(SDA_IN != NULL_PIN){
+        SDA_IN = 0x01 << SERIAL_IN;
+        *PORT_DIR &= ~SDA_IN;
+    }
+
+    if (CLK != NULL_PIN){
+        CLK = 0x01 << CLOCK;
+        *PORT_DIR |= CLK;
+    }
+
+    if(SELECT != NULL_PIN){
+        SELECT = 0x01 << CHIP_SELECT;
+        *PORT_DIR |= SELECT;
+    }
+
 }
 
 uint8_t serialobj::byteOut(uint8_t data, uint8_t direction){

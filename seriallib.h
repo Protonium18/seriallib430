@@ -6,6 +6,7 @@
 
 #define MSB_FIRST 1
 #define LSB_FIRST 0
+#define NULL_PIN 99
 
 class serialobj{
     public:
