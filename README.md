@@ -8,6 +8,7 @@ Documentation:
    - MSB_FIRST = 1 - Used to specify the direction of data transfer. With MSB_FIRST, data will be interpreted/shifted out from the most significant bit.
    - NULL_PIN = 99 - Used to specify a pin that is not in use. The pin will not be initialized or set.
     
+
 serialobj(uint8_t PORT, uint8_t SERIAL_OUT, uint8_t SERIAL_IN, uint8_t CLOCK, uint8_t CHIP_SELECT)
   - serialobj can only be initialized with a single port at this time. The PORT argument dictates which port this is.
   - SERIAL_OUT is the pin on which data is shifted out.  
