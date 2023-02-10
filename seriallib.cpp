@@ -50,7 +50,6 @@ serialobj::serialobj(uint8_t PORT, uint8_t SERIAL_OUT, uint8_t SERIAL_IN, uint8_
     }
 
     if(SDA_IN != NULL_PIN){
-        SDA_IN = 0x01 << SERIAL_IN;
         *PORT_DIR &= ~SDA_IN;
     }
 
