@@ -34,7 +34,7 @@ void TM1637::dataWrite(uint8_t data, uint8_t end){
     }
 }
 
-uint8_t TM1637::singleWrite(uint8_t position, uint8_t number, uint8_t hexadecimal){
+uint8_t TM1637::singleWrite(uint8_t position, uint8_t number, uint8_t hexadecimal, uint8_t colon){
 
     if((position > 3 || number > 9) && hexadecimal == 0){
         return 1;
@@ -42,12 +42,19 @@ uint8_t TM1637::singleWrite(uint8_t position, uint8_t number, uint8_t hexadecima
 
     this->commandWrite(TM1637_DIGITS[position]);
     this->commandWrite(CMD_DATA_WRITE, 0);
-    this->dataWrite(TM1637_NUMBERS[number], 1);
+    if(colon){
+        this->dataWrite(TM1637_NUMBERS[number] | 0x80, 1);
+    }
+
+    else{
+        this->dataWrite(TM1637_NUMBERS[number], 1);
+    }
+
 
     return 0;
 }
 
-uint8_t TM1637::doubleWrite(uint8_t position, uint8_t number){
+uint8_t TM1637::doubleWrite(uint8_t position, uint8_t number, uint8_t colon){
 
     if(position > 2 || number > 99){
         return 1;
@@ -66,7 +73,15 @@ uint8_t TM1637::doubleWrite(uint8_t position, uint8_t number){
     }
 
     this->singleWrite(position, tens);
-    this->singleWrite(position+1, ones);
+
+    if(colon){
+        this->singleWrite(position+1, ones, 0, 1);
+    }
+
+    else{
+        this->singleWrite(position+1, ones);
+    }
+
 
     return 0;
 }
@@ -82,10 +97,10 @@ void TM1637::hexadecimalWrite(uint8_t position, uint8_t number){
     this->singleWrite(position+1, num_2, 1);
 }
 
-void TM1637::clear(){
+void TM1637::clear(uint8_t position, uint8_t length){
 
-    for(int i = 0; i < 4; i++){
-        this->commandWrite(TM1637_DIGITS[i]);
+    for(int i = 0; i < length; i++){
+        this->commandWrite(TM1637_DIGITS[i] + position);
         this->commandWrite(CMD_DATA_WRITE, 0);
         this->dataWrite(0, 1);
     }

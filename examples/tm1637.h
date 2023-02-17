@@ -38,12 +38,12 @@ class TM1637 : public serialobj{
 
     public:
         TM1637(uint8_t PORT, uint8_t SERIAL_OUT, uint8_t SERIAL_IN, uint8_t CLOCK, uint8_t CHIP_SELECT);
-        uint8_t singleWrite(uint8_t position, uint8_t number, uint8_t hexadecimal = 0);
-        uint8_t doubleWrite(uint8_t position, uint8_t number);
+        uint8_t singleWrite(uint8_t position, uint8_t number, uint8_t hexadecimal = 0, uint8_t colon = 0);
+        uint8_t doubleWrite(uint8_t position, uint8_t number, uint8_t colon = 0);
         void hexadecimalWrite(uint8_t position, uint8_t number);
         void commandWrite(uint8_t command, uint8_t end = 1);
         void dataWrite(uint8_t data, uint8_t end = 1);
-        void clear();
+        void clear(uint8_t position = 0, uint8_t length = 4);
 
     private:
 
